@@ -1,0 +1,130 @@
+!StructureMapUnpacked
+class_tables_arr:
+- article
+- document
+- incollection
+- inproceedings
+- journal
+- person
+- proceedings
+linking_tables_arr_dict:
+- object: person
+  predicate: creator
+  subject: article
+  table: article_creator_person
+- object: journal
+  predicate: journal
+  subject: article
+  table: article_journal_journal
+- object: person
+  predicate: creator
+  subject: incollection
+  table: incollection_creator_person
+- object: person
+  predicate: creator
+  subject: inproceedings
+  table: inproceedings_creator_person
+- object: proceedings
+  predicate: partof
+  subject: inproceedings
+  table: inproceedings_partof_proceedings
+- object: person
+  predicate: editor
+  subject: journal
+  table: journal_editor_person
+- object: person
+  predicate: editor
+  subject: proceedings
+  table: proceedings_editor_person
+meta:
+  col_class: class
+  col_id_prefix: ''
+  col_id_suffix: _id
+  col_uris: uri
+  table_uris: uris
+  uri_if_not_found: ' '
+property_map_tables_arr:
+  abstract:
+  - article
+  - inproceedings
+  booktitle:
+  - article
+  - incollection
+  - inproceedings
+  - proceedings
+  cdrom:
+  - article
+  - incollection
+  - inproceedings
+  homepage:
+  - article
+  - incollection
+  - inproceedings
+  - proceedings
+  isbn:
+  - proceedings
+  issued:
+  - incollection
+  - inproceedings
+  - journal
+  - proceedings
+  month:
+  - article
+  name:
+  - person
+  note:
+  - article
+  number:
+  - journal
+  - proceedings
+  pages:
+  - article
+  - incollection
+  - inproceedings
+  publisher:
+  - article
+  - incollection
+  - proceedings
+  seealso:
+  - article
+  - incollection
+  - inproceedings
+  series:
+  - proceedings
+  title:
+  - article
+  - incollection
+  - inproceedings
+  - journal
+  - proceedings
+  volume:
+  - journal
+  - proceedings
+uri_map_property:
+  http://localhost/vocabulary/bench/abstract: abstract
+  http://localhost/vocabulary/bench/booktitle: booktitle
+  http://localhost/vocabulary/bench/cdrom: cdrom
+  http://purl.org/dc/elements/1.1/creator: creator
+  http://purl.org/dc/elements/1.1/publisher: publisher
+  http://purl.org/dc/elements/1.1/title: title
+  http://purl.org/dc/terms/issued: issued
+  http://purl.org/dc/terms/partOf: partof
+  http://swrc.ontoware.org/ontology#editor: editor
+  http://swrc.ontoware.org/ontology#isbn: isbn
+  http://swrc.ontoware.org/ontology#month: month
+  http://swrc.ontoware.org/ontology#note: note
+  http://swrc.ontoware.org/ontology#number: number
+  http://swrc.ontoware.org/ontology#pages: pages
+  http://swrc.ontoware.org/ontology#series: series
+  http://swrc.ontoware.org/ontology#volume: volume
+  http://www.w3.org/2000/01/rdf-schema#seeAlso: seealso
+  http://xmlns.com/foaf/0.1/homepage: homepage
+  http://xmlns.com/foaf/0.1/name: name
+uri_map_table:
+  http://localhost/vocabulary/bench/Article: article
+  http://localhost/vocabulary/bench/Incollection: incollection
+  http://localhost/vocabulary/bench/Inproceedings: inproceedings
+  http://localhost/vocabulary/bench/Journal: journal
+  http://localhost/vocabulary/bench/Proceedings: proceedings
+  http://xmlns.com/foaf/0.1/Document: document
+  http://xmlns.com/foaf/0.1/Person: person
