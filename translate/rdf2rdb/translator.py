@@ -140,7 +140,10 @@ class Translator:
                 else:
                     prop = self.rdf2rdb.get_property_unsafe(triplet.predicate)
                     if sql.select.is_variable_included(prop):
-                        raise NotImplementedError
+                        print(f"Conflicting property ({sql.select.name_map_variable[prop].to_string_select()}) \n"
+                              f"\tfound while adding prop \"{prop}\" for triplet ({triplet}) \n"
+                              f"\t\tfor SQL select object at {hex(id(sql.select))}")
+                        # raise NotImplementedError
                     sql.select.variable_add(prop, renamed_table, var_namer.get_name(triplet.object))
                     sql.where.and_condition_add(var_namer.get_string_prefixed(prop, renamed_table),
                                                 Const.opIsNot,
@@ -372,6 +375,8 @@ class Translator:
                     tps_memory.level_max_allowed = g_traveler.level_now
                     tea_utils = TripletExtendedArrUtils(tps_ext_arr_now)
                     tea_utils.update_as_extension_of(tps_memory.get_allowed_memory(), self.rdf2rdb)
+                    if not TripletExtendedChecker.is_tps_ext_arr_resolved(tps_ext_arr_now, self.rdf2rdb):
+                        raise NotImplementedError
 
                 partial_q_new = self.translate_graph_triplets_arr(tps_ext_arr_now)
                 self.apply_filter(partial_q_new, graph, Namer())
