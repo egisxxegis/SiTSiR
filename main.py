@@ -22,4 +22,9 @@ if __name__ == '__main__':
 
     translator = Translator(query)
     sql_as_string = translator.translate(rdf2rdb)
-    print("zzz")
+    with open(Settings.queryOutputFile, "w") as outputFile:
+        outputFile.write(sql_as_string)
+    print(sql_as_string[0:300])
+    print("...")
+    print("\n\n")
+    print(f"Transformation complete. Check file {Settings.queryOutputFile} for full query")

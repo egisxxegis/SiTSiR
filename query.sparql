@@ -1,16 +1,25 @@
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX swrc:    <http://swrc.ontoware.org/ontology#>
+PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+PREFIX bench:   <http://localhost/vocabulary/bench/>
 PREFIX dc:      <http://purl.org/dc/elements/1.1/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX bench:   <http://localhost/vocabulary/bench/>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
-SELECT ?yr
+SELECT ?inproc ?author ?booktitle ?title
+       ?proc ?ee ?page ?url ?yr ?abstract
 WHERE {
-  ?journal rdf:type bench:Journal .
-  ?journal dc:title "Journal 1 (1940)"^^xsd:string .
-  ?journal dcterms:issued ?yr
+  ?inproc rdf:type bench:Inproceedings .
+  ?inproc dc:creator ?author .
+  ?inproc bench:booktitle ?booktitle .
+  ?inproc dc:title ?title .
+  ?inproc dcterms:partOf ?proc .
+  ?inproc rdfs:seeAlso ?ee .
+  ?inproc swrc:pages ?page .
+  ?inproc foaf:homepage ?url .
+  ?inproc dcterms:issued ?yr
+  OPTIONAL {
+    ?inproc bench:abstract ?abstract
+  }
 }
-
-
-
-
+ORDER BY ?yr
