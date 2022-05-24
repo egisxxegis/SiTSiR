@@ -396,7 +396,10 @@ class Translator:
         return partial_q_previous
 
     def translate(self) -> str:
+        print("Translating graphs into SQL partials ...")
         result_q = self.translate_into_query_partial()
+        print("Translating graphs into SQL partials ... Done")
+        print("Applying final projection, order by, limit, offset ...")
         projection_q = QuerySQL()
         projection_q.select.set_from_query_as_table(str(result_q), Namer().rename("result_q"))
         var_namer = Namer()
@@ -407,5 +410,5 @@ class Translator:
             projection_q.order.variables_arr.append(projection_q.select.name_map_variable[var_namer.get_name(var)])
         projection_q.limit = self.query.limit
         projection_q.offset = self.query.offset
+        print("Applying final projection, order by, limit, offset ... Done")
         return str(projection_q)
-        pass

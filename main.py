@@ -17,13 +17,18 @@ if __name__ == '__main__':
     # for part in parts:
     #     print(part)
 
+    print("Reading SPARQL query ...")
     queryFabric = QueryFabric()
     query = queryFabric.query_from_parser(parser)
+    print("Reading SPARQL query ... Done")
 
+    print("Transforming SPARQL into SQL query ...")
     translator = Translator(query)
     sql_as_string = translator.translate(rdf2rdb)
     with open(Settings.queryOutputFile, "w") as outputFile:
         outputFile.write(sql_as_string)
+    print("Printing review of SQL query")
+    print("-----------------------------------------------")
     print(sql_as_string[0:300])
     print("...")
     print("\n\n")

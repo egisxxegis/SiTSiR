@@ -16,8 +16,12 @@ class Translator:
         raise NotImplementedError(f"No support for {self.ontologyConverter} ontology converted found")
 
     def translate_for_rdf2rdb(self, rdf2rdb: StructureMapUnpacked) -> str:
+        print("SPARQL query normalisation ...")
         normaliser = NormaliserSPARQL(self.query)
         normaliser.normalise_no_copy()
+        print("SPARQL query normalisation ... Done")
 
+        print("Performing SPARQL to SQL transformation for RDF2RDB schema ... ")
         translator = rdf2rdbTranslator(self.query, rdf2rdb)
+        print("Performing SPARQL to SQL transformation for RDF2RDB schema ... Done")
         return translator.translate()
