@@ -26,3 +26,6 @@ class Triplet:
         datatype_raw = self.dataTypeDefault if datatype_raw is None else datatype_raw
         self.object = the_object
         self.objectDataType = datatype_raw
+
+    def __str__(self):
+        return f"{self.subject} {self.predicate} {self.object}"
