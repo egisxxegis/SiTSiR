@@ -145,7 +145,7 @@ class TripletExtendedArrUtils:
                     var_map_table[tp.subject] = tp.table_subject
                 if self.checker.is_variable(tp.object) \
                         and tp.table_object != "":
-                    var_map_table[tp.subject] = tp.table_object
+                    var_map_table[tp.object] = tp.table_object
             return
 
         var_map_table_subject = find_base_roots_dict(triplets_ext_arr)
