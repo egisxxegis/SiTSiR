@@ -22,4 +22,5 @@ class TripletExtended(Triplet):
                and self.table_subject != ""
 
     def __str__(self):
-        return f"{self.subject} {self.predicate} {self.object}"
+        table = self.table_subject if self.table_linking == "" else self.table_linking
+        return f"{self.subject} {self.predicate} {self.object}    (at {table})"
