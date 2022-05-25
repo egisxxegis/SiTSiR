@@ -7,3 +7,8 @@ SPARQL Transform (to) SQL (for) RDF2RDB
 <b>Transformation not implemented yet:</b> Q8, Q9, Q10, Q11 <br />
 <br />
 <b>Not enough data in database for these queries:</b> Q6, Q7 <br />
+
+# Do not forget
+.yml contains mapping data about database schema. <br />
+Do not forget to generate one if the schema got changed. <br />
+Link to used mapping tool: https://github.com/egisxxegis/rdf2rdb_mapper
