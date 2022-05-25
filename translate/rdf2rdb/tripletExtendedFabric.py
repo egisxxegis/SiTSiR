@@ -7,6 +7,7 @@ from SPARQL.const import Const
 from translate.checker import Checker
 from translate.rdf2rdb.tripletExtendedType import TripletExtendedType
 from const import Const as MapConst
+from translate.rdf2rdb.artificialQuery import ArtificialQuery
 
 
 class TripletExtendedFabric:
@@ -200,9 +201,10 @@ class TripletExtendedFabric:
                     if len(possible_linkings) > 1:
                         raise NotImplementedError(tp_ext)
                     linking = possible_linkings[0]
+                    is_updated_self = tp_ext.table_linking == ""
                     tp_ext.table_linking = linking[MapConst.linkingTable]
                     tp_ext.table_object = linking[MapConst.linkingObject]
-                    is_updated = update_subject_reprs_with_remove()
+                    is_updated = update_subject_reprs_with_remove() or is_updated_self
                     to_remove_obj.append(tp_ext)
                     break
                 if len(to_remove_obj) > 0:
@@ -269,5 +271,8 @@ class TripletExtendedFabric:
                 continue
             else:
                 break
+
+        for triplet in triplets_ext_arr:
+            triplet.artificial_type = ArtificialQuery.find_type(triplet)
 
         return triplets_ext_arr

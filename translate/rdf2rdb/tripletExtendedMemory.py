@@ -17,6 +17,7 @@ class TripletExtendedMemory:
         return combined
 
     def set_memory(self, level: int, tps_ext_arr: List[TripletExtended]) -> None:
+        self.align_levels_to(level)
         self.level_max = level if level > self.level_max else self.level_max
         if len(self.tps_ext_arr_arr) + 1 < level:
             raise Exception(f"You can not set memory level {level} \n"
@@ -34,4 +35,7 @@ class TripletExtendedMemory:
     def align_levels_to(self, level: int) -> None:
         while self.level_max > level:
             self.forget_top_memory()
+        while len(self.tps_ext_arr_arr) < level - 1:
+            self.tps_ext_arr_arr.append([])
+            self.level_max += 1
         return

@@ -14,7 +14,11 @@ class TripletExtendedChecker(object):
         if triplet_extended.table_subject == "":
             # no root known
             return False
-        if triplet_extended.table_linking == "" \
+        if triplet_extended.table_subject != "" \
+                and triplet_extended.type == TripletExtendedType.VAR_SPO:
+            return True
+        if not triplet_extended.is_root \
+            and triplet_extended.table_linking == "" \
             and not rdf2rdb.is_property_in_table(rdf2rdb.get_property_unsafe(triplet_extended.predicate),
                                                  triplet_extended.table_subject):
             # missing linking

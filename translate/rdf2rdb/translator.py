@@ -58,7 +58,7 @@ class Translator:
         to_return = []
         one_table_kind_arr = []
         i = 0
-        while True:
+        while True and len(triplets_ext_arr) > i:
             triplet_ext = triplets_ext_arr[i]
             one_table_kind_arr.append(triplet_ext)
             if i + 1 >= len(triplets_ext_arr):
@@ -366,34 +366,37 @@ class Translator:
         tps_ext_arr_now = []
         level_previous = g_traveler.level_now
         while True:
-            tps_ext_arr_now = self.tps_arr_to_tps_ext_arr(graph.triplets_arr)
-            tps_memory.set_memory(g_traveler.level_now, tps_ext_arr_now)
-            if graph != g_root:
-                # operation something
-                tps_memory.align_levels_to(g_traveler.level_now)
-                if not TripletExtendedChecker.is_tps_ext_arr_resolved(tps_ext_arr_now, self.rdf2rdb):
-                    tps_memory.level_max_allowed = g_traveler.level_now
-                    tea_utils = TripletExtendedArrUtils(tps_ext_arr_now)
-                    tea_utils.update_as_extension_of(tps_memory.get_allowed_memory(), self.rdf2rdb)
+            if len(graph.triplets_arr) > 0:
+                tps_ext_arr_now = self.tps_arr_to_tps_ext_arr(graph.triplets_arr)
+                tps_memory.set_memory(g_traveler.level_now, tps_ext_arr_now)
+                if graph != g_root:
+                    # operation something
+                    tps_memory.align_levels_to(g_traveler.level_now)
+                    if not TripletExtendedChecker.is_tps_ext_arr_resolved(tps_ext_arr_now, self.rdf2rdb):
+                        tps_memory.level_max_allowed = g_traveler.level_now
+                        tea_utils = TripletExtendedArrUtils(tps_ext_arr_now)
+                        tea_utils.update_as_extension_of(tps_memory.get_allowed_memory(), self.rdf2rdb)
+                        if not TripletExtendedChecker.is_tps_ext_arr_resolved(tps_ext_arr_now, self.rdf2rdb):
+                            raise NotImplementedError
+
+                    partial_q_new = self.translate_graph_triplets_arr(tps_ext_arr_now)
+                    self.apply_filter(partial_q_new, graph, Namer())
+
+                    if graph.is_union:
+                        partial_q_previous = self.q1_union_q2(partial_q_previous, partial_q_new, Namer())
+                    elif graph.is_optional:
+                        partial_q_previous = self.q1_optional_q2(partial_q_previous, partial_q_new, Namer())
+                    else:
+                        raise NotImplementedError
+                    level_previous = g_traveler.level_now
+                    pass
+                else:
+                    # first step
                     if not TripletExtendedChecker.is_tps_ext_arr_resolved(tps_ext_arr_now, self.rdf2rdb):
                         raise NotImplementedError
-
-                partial_q_new = self.translate_graph_triplets_arr(tps_ext_arr_now)
-                self.apply_filter(partial_q_new, graph, Namer())
-
-                if graph.is_union:
-                    partial_q_previous = self.q1_union_q2(partial_q_previous, partial_q_new, Namer())
-                elif graph.is_optional:
-                    partial_q_previous = self.q1_optional_q2(partial_q_previous, partial_q_new, Namer())
-                else:
-                    raise NotImplementedError
-                level_previous = g_traveler.level_now
-                pass
-            else:
-                # first step
-                partial_q_new = self.translate_graph_triplets_arr(tps_ext_arr_now)
-                self.apply_filter(partial_q_new, graph, Namer())
-                partial_q_previous = partial_q_new
+                    partial_q_new = self.translate_graph_triplets_arr(tps_ext_arr_now)
+                    self.apply_filter(partial_q_new, graph, Namer())
+                    partial_q_previous = partial_q_new
 
             graph = g_traveler.get_next_or_root()
             if graph == g_root:

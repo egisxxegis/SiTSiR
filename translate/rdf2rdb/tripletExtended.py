@@ -1,5 +1,6 @@
 from SPARQL.triplet import Triplet
 from translate.rdf2rdb.tripletExtendedType import TripletExtendedType
+from translate.rdf2rdb.artificialType import ArtificialType
 
 
 class TripletExtended(Triplet):
@@ -13,6 +14,7 @@ class TripletExtended(Triplet):
         self.table_object = ""
         self.table_linking = ""
         self.type = TripletExtendedType.UNKNOWN
+        self.artificial_type = ArtificialType.NONE
 
     # no need for datatype
 
