@@ -8,7 +8,7 @@ from translate.translator import Translator
 with open(Settings.rdf2rdbMapFile, 'r') as mapFile:
     rdf2rdb = yaml.unsafe_load(mapFile)
 
-inputs = [f"test_data/query0{x}.sparql" for x in [1, 2, "3a", "3b", 4, "5a", "5b"]]
+inputs = [f"test_data/query0{x}.sparql" for x in [1, 2, "3a", "3b", "3c", 4, "5a", "5b"]]
 for sparqlIn in inputs:
     print(f"Translating {sparqlIn}")
     with open(sparqlIn, 'r') as queryInputFile:
