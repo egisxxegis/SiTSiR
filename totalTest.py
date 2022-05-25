@@ -39,3 +39,25 @@ for sparqlIn in illegal_inputs:
 print("-----------------")
 for log in loglog:
     print(log)
+
+
+loglog.clear()
+inputs.extend(illegal_inputs)
+for sparqlIn in inputs:
+    with open(sparqlIn, 'r') as queryInputFile:
+        queryRaw = queryInputFile.read()
+    parser = Parser(queryRaw)
+    queryFabric = QueryFabric()
+    query = queryFabric.query_from_parser(parser)
+    translator = Translator(query)
+    try:
+        sql_as_string = translator.translate(rdf2rdb)
+        loglog.append(f"Translating {sparqlIn} SUCCESS")
+    except Exception:
+        loglog.append(f"Translating {sparqlIn} -------- FAILED")
+
+print("------------------------------------------")
+print("------------------------------------------")
+print("------------------------------------------")
+for log in loglog:
+    print(log)
